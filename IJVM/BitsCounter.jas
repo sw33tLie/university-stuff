@@ -1,0 +1,45 @@
+// Counts how many ones we have in the number 37 (100101) = 3
+// This is a lot of fun, isn't it?
+// The best part is that this actually compiles!
+.constant
+objref 0xDEAD
+.end-constant
+ 
+.main
+.var
+    result
+.end-var
+    LDC_W objref
+    BIPUSH 37
+    INVOKEVIRTUAL contauno
+    ISTORE result
+    HALT
+.end-main
+ 
+.method contauno(x)
+.var
+    MASK
+    COUNTER
+.end-var
+    BIPUSH 0
+    ISTORE COUNTER
+    BIPUSH 1
+    ISTORE MASK
+loop:   ILOAD MASK
+    ILOAD x
+    IAND
+    IFEQ jump
+    IINC COUNTER 1
+                           
+jump:   ILOAD MASK
+    DUP
+    IADD
+    ISTORE MASK
+    ILOAD MASK
+    IFEQ termina
+    GOTO loop
+ 
+termina:   ILOAD COUNTER
+    IRETURN
+   
+.end-method
